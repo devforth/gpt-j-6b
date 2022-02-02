@@ -9,7 +9,7 @@ RUN pip3 install mesh-transformer-jax/ jax==0.2.12 jaxlib -f https://storage.goo
 RUN pip3 install git+https://github.com/finetuneanon/transformers@gpt-j
 RUN apt install -y zstd
 RUN apt install -y wget
-RUN wget -c https://the-eye.eu/public/AI/GPT-J-6B/step_383500_slim.tar.zstd
+RUN wget -c https://mystic.the-eye.eu/public/AI/GPT-J-6B/step_383500_slim.tar.zstd
 RUN tar -I zstd -xf step_383500_slim.tar.zstd
 RUN mkdir gpt-j-hf
 RUN apt install -y curl
