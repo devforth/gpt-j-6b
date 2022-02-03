@@ -1,7 +1,7 @@
 from transformers import GPTNeoForCausalLM, AutoConfig, GPT2Tokenizer
 import transformers
 
-model = GPTNeoForCausalLM.from_pretrained("./gpt-j-hf")
+model = GPTNeoForCausalLM.from_pretrained("./gpt-j-hf", low_cpu_mem_usage=True)
 tokenizer = transformers.GPT2Tokenizer.from_pretrained('gpt2')
 model.half().cuda()
 input_text = "Hello my name is Paul and"
