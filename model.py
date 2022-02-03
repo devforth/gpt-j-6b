@@ -1,11 +1,20 @@
-from transformers import GPTNeoForCausalLM, AutoConfig, GPT2Tokenizer
-import transformers
+from transformers import GPTJForCausalLM, AutoConfig, GPT2Tokenizer, AutoTokenizer
+import torch
 
-model = GPTNeoForCausalLM.from_pretrained("./gpt-j-hf", low_cpu_mem_usage=True)
-tokenizer = transformers.GPT2Tokenizer.from_pretrained('gpt2')
-model.half().cuda()
+print('calling .from_pretrained start')
+model = GPTJForCausalLM.from_pretrained("./gpt-j-hf", torch_dtype=torch.float16, low_cpu_mem_usage=True)
+print('.from_pretrained end')
+
+# tokenizer = transformers.GPT2Tokenizer.from_pretrained('gpt2')
+tokenizer = AutoTokenizer.from_pretrained("EleutherAI/gpt-j-6B")
+print('AutoTokenizer.from_pretrained end')
+
+
+# model.half().cuda()
+# model.half()
+
 input_text = "Hello my name is Paul and"
-input_ids = tokenizer.encode(str(input_text), return_tensors='pt').cuda()
+input_ids = tokenizer.encode(str(input_text), return_tensors='pt')
 
 output = model.generate(
     input_ids,
@@ -16,7 +25,7 @@ output = model.generate(
     temperature=1.0,
 )
 
-print(tokenizer.decode(output[0], skip_special_tokens=True))
+print('output', tokenizer.decode(output[0], skip_special_tokens=True))
 
 def eval(input):
     input_ids = tokenizer.encode(str(input["text"]), return_tensors='pt').cuda()
